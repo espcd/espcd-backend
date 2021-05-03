@@ -2,6 +2,10 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
   included do
+    rescue_from Exception do |e|
+      json_response({ message: e.message }, 500)
+    end
+
     rescue_from ActiveRecord::RecordNotFound do |e|
       json_response({ message: e.message }, :not_found)
     end
