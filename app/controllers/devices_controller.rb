@@ -25,6 +25,8 @@ class DevicesController < ApplicationController
     head :no_content
   end
 
+  private
+
   def device_params
     params.permit(:id, :title, :description, :model, :chip_id, :last_seen)
   end

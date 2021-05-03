@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :devices
+  resources :firmwares
+  resources :firmwares, only: %i[create show] do
+    get :content, on: :member
+  end
 end
