@@ -6,7 +6,8 @@ class CreateDevices < ActiveRecord::Migration[6.1]
       t.string :title
       t.text :description
       t.string :model
-      t.string :chip_id
+      t.uuid :current_firmware_id
+      t.uuid :available_firmware_id
       t.datetime :last_seen
 
       t.timestamps

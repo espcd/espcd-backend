@@ -65,4 +65,6 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.action_controller.action_on_unpermitted_parameters = :raise
+
+  config.hosts << "test.example.com"
 end

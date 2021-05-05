@@ -48,13 +48,14 @@ ActiveRecord::Schema.define(version: 2021_05_03_144315) do
     t.string "title"
     t.text "description"
     t.string "model"
-    t.string "chip_id"
+    t.uuid "current_firmware_id"
+    t.uuid "available_firmware_id"
     t.datetime "last_seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "firmwares", force: :cascade do |t|
+  create_table "firmwares", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "version"
     t.string "title"
     t.text "description"

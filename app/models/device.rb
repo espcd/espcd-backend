@@ -1,3 +1,5 @@
 class Device < ApplicationRecord
-  validates :model, :chip_id, presence: true
+  belongs_to :firmware, optional: true
+
+  validates :model, presence: true
 end
