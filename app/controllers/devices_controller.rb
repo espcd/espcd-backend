@@ -28,7 +28,9 @@ class DevicesController < ApplicationController
   private
 
   def device_params
-    params.permit(:id, :title, :description, :model, :chip_id, :last_seen)
+    params
+      .require(:device)
+      .permit(:id, :title, :description, :model, :chip_id, :last_seen)
   end
 
   def set_device
