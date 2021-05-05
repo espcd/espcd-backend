@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :devices
-  resources :firmwares
-  resources :firmwares, only: %i[create show] do
-    get :content, on: :member
+  resources :firmwares do
+    member do
+      get 'content', to: 'firmwares#get_content'
+      post 'content', to: 'firmwares#set_content'
+    end
   end
 end
