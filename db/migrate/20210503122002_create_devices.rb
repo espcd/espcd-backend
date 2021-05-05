@@ -1,6 +1,8 @@
 class CreateDevices < ActiveRecord::Migration[6.1]
   def change
-    create_table :devices do |t|
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+
+    create_table :devices, id: :uuid do |t|
       t.string :title
       t.text :description
       t.string :model
