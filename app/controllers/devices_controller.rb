@@ -7,6 +7,8 @@ class DevicesController < ApplicationController
   end
 
   def show
+    @device.update('last_seen' => DateTime.now)
+
     json_response(@device)
   end
 
