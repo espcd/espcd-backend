@@ -1,5 +1,5 @@
 class FirmwaresController < ApplicationController
-  before_action :set_firmware, only: [:show, :update, :destroy, :get_content, :set_content]
+  before_action :set_firmware, only: [:show, :update, :destroy, :content]
 
   def index
     @firmwares = Firmware.all
@@ -25,11 +25,7 @@ class FirmwaresController < ApplicationController
     head :no_content
   end
 
-  def set_content
-    @firmware.content.attach(params[:content])
-  end
-
-  def get_content
+  def content
     if @firmware&.content&.attached?
       redirect_to rails_blob_url(@firmware.content)
     else
@@ -42,7 +38,7 @@ class FirmwaresController < ApplicationController
   def firmware_params
     params
       .require(:firmware)
-      .permit(:id, :version, :title, :description)
+      .permit(:id, :version, :title, :description, :content)
   end
 
   def set_firmware

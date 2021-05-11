@@ -1,7 +1,7 @@
 class Firmware < ApplicationRecord
   has_many :devices
 
-  validates :version, presence: true
+  validates :version, :content, presence: true
 
   has_one_attached :content
 end

@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   resources :devices
   resources :firmwares do
     member do
-      get 'content', to: 'firmwares#get_content'
-      post 'content', to: 'firmwares#set_content'
+      get 'content', to: 'firmwares#content'
     end
   end
 end
