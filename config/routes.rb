@@ -5,4 +5,5 @@ Rails.application.routes.draw do
       get 'content', to: 'firmwares#content'
     end
   end
+  resources :products
 end

@@ -38,7 +38,7 @@ class FirmwaresController < ApplicationController
   def firmware_params
     params
       .require(:firmware)
-      .permit(:id, :version, :title, :description, :content)
+      .permit(:id, :version, :title, :description, :model, :content, :product_id)
   end
 
   def set_firmware
