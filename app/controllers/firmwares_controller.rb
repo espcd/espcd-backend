@@ -17,7 +17,7 @@ class FirmwaresController < ApplicationController
 
   def update
     @firmware.update(firmware_params)
-    head :no_content
+    json_response(@firmware)
   end
 
   def destroy

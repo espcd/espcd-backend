@@ -19,7 +19,7 @@ class DevicesController < ApplicationController
 
   def update
     @device.update(device_params)
-    head :no_content
+    json_response(@device)
   end
 
   def destroy

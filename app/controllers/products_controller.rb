@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
 
   def update
     @product.update(product_params)
-    head :no_content
+    json_response(@product)
   end
 
   def destroy
