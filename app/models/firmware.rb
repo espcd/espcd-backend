@@ -1,5 +1,5 @@
 class Firmware < ApplicationRecord
-  has_many :devices
+  has_many :devices, dependent: :nullify
   belongs_to :product, optional: true
 
   validates :version, :content, presence: true
