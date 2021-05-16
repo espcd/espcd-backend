@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_16_111237) do
+ActiveRecord::Schema.define(version: 2021_05_16_114243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(version: 2021_05_16_111237) do
     t.string "title"
     t.text "description"
     t.string "model"
-    t.uuid "current_firmware_id"
-    t.uuid "available_firmware_id"
     t.datetime "last_seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "product_id"
+    t.uuid "firmware_id"
+    t.index ["firmware_id"], name: "index_devices_on_firmware_id"
     t.index ["product_id"], name: "index_devices_on_product_id"
   end
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_111237) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "devices", "firmwares"
   add_foreign_key "devices", "products"
   add_foreign_key "firmwares", "products"
   add_foreign_key "products", "firmwares"
