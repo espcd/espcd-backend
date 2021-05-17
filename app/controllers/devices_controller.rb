@@ -13,7 +13,10 @@ class DevicesController < ApplicationController
   end
 
   def create
-    @device = Device.create!(device_params)
+    @device = Device.create!(device_params) do |device|
+      device.last_seen = DateTime.now
+    end
+
     json_response(@device, :created)
   end
 
