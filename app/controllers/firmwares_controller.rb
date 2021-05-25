@@ -12,19 +12,20 @@ class FirmwaresController < ApplicationController
 
   def create
     @firmware = Firmware.create!(firmware_params)
-
-    @firmware.product.update(firmware: @firmware)
-
+    @firmware.product.update!(firmware: @firmware)
+    ActionCable.server.broadcast 'firmwares_channel', { type: 'create', firmware: @firmware }
     json_response(@firmware, :created)
   end
 
   def update
-    @firmware.update(firmware_params)
+    @firmware.update!(firmware_params)
+    ActionCable.server.broadcast 'firmwares_channel', { type: 'update', firmware: @firmware }
     json_response(@firmware)
   end
 
   def destroy
-    @firmware.destroy
+    @firmware.destroy!
+    ActionCable.server.broadcast 'firmwares_channel', { type: 'destroy', firmware: @firmware }
     head :no_content
   end
 

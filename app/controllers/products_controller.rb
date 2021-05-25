@@ -12,16 +12,19 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.create!(product_params)
+    ActionCable.server.broadcast 'products_channel', { type: 'create', product: @product }
     json_response(@product, :created)
   end
 
   def update
-    @product.update(product_params)
+    @product.update!(product_params)
+    ActionCable.server.broadcast 'products_channel', { type: 'update', product: @product }
     json_response(@product)
   end
 
   def destroy
-    @product.destroy
+    @product.destroy!
+    ActionCable.server.broadcast 'products_channel', { type: 'destroy', product: @product }
     head :no_content
   end
 
