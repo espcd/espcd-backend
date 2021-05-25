@@ -33,9 +33,11 @@ class DevicesController < ApplicationController
   private
 
   def device_params
-    params
-      .require(:device)
-      .permit(:id, :title, :description, :model, :firmware_id, :last_seen, :product_id)
+    if params[:device].present?
+      params
+        .require(:device)
+        .permit(:id, :title, :description, :model, :firmware_id, :last_seen, :product_id)
+    end
   end
 
   def set_device
