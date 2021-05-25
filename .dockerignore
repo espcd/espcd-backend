@@ -1,4 +1,6 @@
+.dockerignore
+Dockerfile
+docker-compose.yml
 .idea
 tmp
 log
-docker-compose.yml
