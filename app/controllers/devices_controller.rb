@@ -14,19 +14,16 @@ class DevicesController < ApplicationController
 
   def create
     @device = Device.create!(device_params)
-    ActionCable.server.broadcast 'devices_channel', { type: 'create', device: @device }
     json_response(@device, :created)
   end
 
   def update
     @device.update!(device_params)
-    ActionCable.server.broadcast 'devices_channel', { type: 'update', device: @device }
     json_response(@device)
   end
 
   def destroy
     @device.destroy!
-    ActionCable.server.broadcast 'devices_channel', { type: 'destroy', device: @device }
     head :no_content
   end
 
