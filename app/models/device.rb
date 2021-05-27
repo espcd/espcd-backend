@@ -8,5 +8,5 @@ class Device < ApplicationRecord
 
   after_create_commit { DevicesBroadcastJob.perform_later('create', self) }
   after_update_commit { DevicesBroadcastJob.perform_later('update', self) }
-  after_destroy { DevicesBroadcastJob.perform_later('destroy', self) }
+  after_destroy { DevicesBroadcastJob.perform_later('destroy', id) }
 end

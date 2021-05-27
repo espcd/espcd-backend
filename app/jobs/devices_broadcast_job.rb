@@ -1,7 +1,7 @@
 class DevicesBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(type, device)
-    ActionCable.server.broadcast 'devices_channel', { type: type, device: device }
+  def perform(type, data)
+    ActionCable.server.broadcast 'devices_channel', { type: type, data: data }
   end
 end

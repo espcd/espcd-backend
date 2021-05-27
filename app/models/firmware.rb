@@ -8,5 +8,5 @@ class Firmware < ApplicationRecord
 
   after_create_commit { FirmwaresBroadcastJob.perform_later('create', self) }
   after_update_commit { FirmwaresBroadcastJob.perform_later('update', self) }
-  after_destroy { FirmwaresBroadcastJob.perform_later('destroy', self) }
+  after_destroy { FirmwaresBroadcastJob.perform_later('destroy', id) }
 end
