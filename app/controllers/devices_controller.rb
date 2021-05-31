@@ -33,7 +33,7 @@ class DevicesController < ApplicationController
     if params[:device].present?
       params
         .require(:device)
-        .permit(:id, :title, :description, :model, :firmware_id, :last_seen, :product_id)
+        .permit(:id, :title, :description, :fqbn, :firmware_id, :last_seen, :product_id)
     end
   end
 

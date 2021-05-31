@@ -40,7 +40,7 @@ class FirmwaresController < ApplicationController
     if params[:firmware].present?
       params
         .require(:firmware)
-        .permit(:id, :version, :title, :description, :model, :content, :product_id)
+        .permit(:id, :version, :title, :description, :fqbn, :content, :product_id)
     end
   end
 

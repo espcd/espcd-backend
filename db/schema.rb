@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_122524) do
+ActiveRecord::Schema.define(version: 2021_05_31_173226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_122524) do
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.string "model"
+    t.string "fqbn"
     t.datetime "last_seen", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_122524) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "model"
+    t.string "fqbn"
     t.uuid "product_id"
     t.index ["product_id"], name: "index_firmwares_on_product_id"
   end
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_122524) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "firmware_id"
-    t.string "model"
+    t.string "fqbn"
     t.index ["firmware_id"], name: "index_products_on_firmware_id"
   end
 

@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     if params[:product].present?
       params
         .require(:product)
-        .permit(:id, :title, :description, :model, :auto_update, :firmware_id)
+        .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id)
     end
   end
 
