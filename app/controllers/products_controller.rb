@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
+  before_action :require_session_or_token!
 
   def index
     @products = Product.all

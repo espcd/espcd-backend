@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :update, :destroy]
+  before_action :require_session_or_token!
 
   def index
     @devices = Device.all

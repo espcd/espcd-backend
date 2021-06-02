@@ -1,5 +1,6 @@
 class FirmwaresController < ApplicationController
   before_action :set_firmware, only: [:show, :update, :destroy, :content]
+  before_action :require_session_or_token!
 
   def index
     @firmwares = Firmware.all
