@@ -11,7 +11,8 @@ class TokensController < ApplicationController
   end
 
   def create
-    @token = Token.create!(token_params)
+    token_params_user = token_params.merge(user_id: session_user.id)
+    @token = Token.create!(token_params_user)
     json_response(@token, :created)
   end
 
