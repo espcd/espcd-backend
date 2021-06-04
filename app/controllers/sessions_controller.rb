@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       end
       json_response({ id: user.id, token: session }, :created)
     else
-      head(:unauthorized)
+      json_error('Wrong credentials', :unauthorized)
     end
   end
 
