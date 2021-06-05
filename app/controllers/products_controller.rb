@@ -29,11 +29,9 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    if params[:product].present?
-      params
-        .require(:product)
-        .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id)
-    end
+    params
+      .require(:product)
+      .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id)
   end
 
   def set_product
