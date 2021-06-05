@@ -16,10 +16,10 @@ class ApplicationController < ActionController::API
   end
 
   def require_session_or_token!
-    raise 'permission denied' unless session_user || token_user
+    json_error('permission denied', :unauthorized) unless session_user || token_user
   end
 
   def require_session!
-    raise 'permission denied' unless session_user
+    json_error('permission denied', :unauthorized) unless session_user
   end
 end
