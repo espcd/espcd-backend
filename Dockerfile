@@ -15,6 +15,8 @@ ENV RAILS_ENV=production
 
 EXPOSE 3000
 
+VOLUME /app/storage
+
 COPY Gemfile Gemfile.lock ./
 
 RUN bundle install
