@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_06_135430) do
+ActiveRecord::Schema.define(version: 2021_06_07_182844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -75,9 +75,6 @@ ActiveRecord::Schema.define(version: 2021_06_06_135430) do
     t.boolean "auto_update", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "firmware_id"
-    t.string "fqbn"
-    t.index ["firmware_id"], name: "index_products_on_firmware_id"
   end
 
   create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -105,7 +102,6 @@ ActiveRecord::Schema.define(version: 2021_06_06_135430) do
   add_foreign_key "devices", "firmwares"
   add_foreign_key "devices", "products"
   add_foreign_key "firmwares", "products"
-  add_foreign_key "products", "firmwares"
   add_foreign_key "tokens", "users"
   add_foreign_key "users", "tokens"
 end

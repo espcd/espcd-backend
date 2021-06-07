@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :update, :destroy]
+  before_action :set_product, only: [:show, :update, :destroy, :firmware]
   before_action :require_session_or_token!
 
   def index
@@ -24,6 +24,12 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy!
     head :no_content
+  end
+
+  def firmware
+    firmwares = @product.firmwares.select { |f| f.fqbn == params[:fqbn] }
+    firmware = firmwares.last
+    json_response(firmware)
   end
 
   private

@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products
+  resources :products do
+    member do
+      get 'firmware', to: 'products#firmware'
+    end
+  end
 
   post 'session', to: 'sessions#create'
   delete 'session', to: 'sessions#destroy'

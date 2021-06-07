@@ -13,7 +13,6 @@ class FirmwaresController < ApplicationController
 
   def create
     @firmware = Firmware.create!(firmware_params)
-    @firmware.product&.update!(firmware: @firmware)
     json_response(@firmware, :created)
   end
 
