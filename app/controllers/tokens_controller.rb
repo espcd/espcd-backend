@@ -31,7 +31,7 @@ class TokensController < ApplicationController
   def token_params
     params
       .require(:token)
-      .permit(:id, :title, :description, :token, :user_id)
+      .permit(:id, :title, :description, :token, :user_id, :expires_at)
   end
 
   def set_token

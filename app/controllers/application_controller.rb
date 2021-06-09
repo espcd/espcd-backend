@@ -12,7 +12,10 @@ class ApplicationController < ActionController::API
     return nil unless params[:api_key]
 
     token = Token.find_by(token: params[:api_key])
-    token&.user
+    return nil unless token&.expires_at
+    return nil if token.expires_at.to_time < Time.current
+
+    token.user
   end
 
   def require_session_or_token!
