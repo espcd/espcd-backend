@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_09_141644) do
+ActiveRecord::Schema.define(version: 2021_06_11_144358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_06_09_141644) do
     t.boolean "auto_update", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "check_interval", default: 60
   end
 
   create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

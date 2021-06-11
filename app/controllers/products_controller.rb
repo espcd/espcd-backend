@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
   def product_params
     params
       .require(:product)
-      .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id)
+      .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id, :check_interval)
   end
 
   def set_product
