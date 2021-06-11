@@ -1,5 +1,6 @@
 class Token < ApplicationRecord
   belongs_to :user
+  belongs_to :product, optional: true
 
   after_create :reload  # https://github.com/rails/rails/issues/34237
 
