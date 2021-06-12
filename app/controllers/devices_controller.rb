@@ -6,7 +6,7 @@ class DevicesController < ApplicationController
     require_session_or_token!(device_params[:product_id])
   end
   before_action only: [:show, :update] do
-    require_session_or_token!(@device.product.id)
+    require_session_or_token!(@device.product&.id)
   end
 
   def index
