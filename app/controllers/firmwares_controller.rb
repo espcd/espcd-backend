@@ -1,5 +1,5 @@
 class FirmwaresController < ApplicationController
-  before_action :set_firmware, only: [:show, :update, :destroy, :content]
+  before_action :set_firmware, except: [:index, :create]
   before_action :require_session_or_token!
 
   def index
@@ -13,11 +13,13 @@ class FirmwaresController < ApplicationController
 
   def create
     @firmware = Firmware.create!(firmware_params)
+    remove_prodcuts_from_other
     json_response(@firmware, :created)
   end
 
   def update
     @firmware.update!(firmware_params)
+    remove_prodcuts_from_other
     json_response(@firmware)
   end
 
@@ -44,5 +46,11 @@ class FirmwaresController < ApplicationController
 
   def set_firmware
     @firmware = Firmware.find(params[:id])
+  end
+
+  def remove_prodcuts_from_other
+    @firmware.product.firmwares.select { |f| f.fqbn == @firmware.fqbn && f.id != @firmware.id }.each do |firmware|
+      firmware.update!(product_id: nil)
+    end
   end
 end

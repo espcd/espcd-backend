@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :update, :destroy, :firmware]
+  before_action :set_product, except: [:index, :create]
   before_action :require_session_or_token!
 
   def index
@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
   def product_params
     params
       .require(:product)
-      .permit(:id, :title, :description, :fqbn, :auto_update, :firmware_id, :check_interval)
+      .permit(:id, :title, :description, :fqbn, :auto_update, :check_interval)
   end
 
   def set_product

@@ -1,5 +1,5 @@
 class TokensController < ApplicationController
-  before_action :set_token, only: [:show, :update, :destroy]
+  before_action :set_token, except: [:index, :create]
   before_action :require_session!
 
   def index
