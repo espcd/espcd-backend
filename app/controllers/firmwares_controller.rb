@@ -1,6 +1,13 @@
 class FirmwaresController < ApplicationController
   before_action :set_firmware, except: [:index, :create]
-  before_action :require_session_or_token!
+
+  before_action :require_session!, only: [:index, :destroy]
+  before_action only: [:create] do
+    require_session_or_token!(firmware_params[:product_id])
+  end
+  before_action only: [:show, :update, :content] do
+    require_session_or_token!(@firmware.product.id)
+  end
 
   def index
     @firmwares = Firmware.all

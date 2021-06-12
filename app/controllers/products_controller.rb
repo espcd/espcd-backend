@@ -1,6 +1,10 @@
 class ProductsController < ApplicationController
   before_action :set_product, except: [:index, :create]
-  before_action :require_session_or_token!
+
+  before_action :require_session!, only: [:index, :create, :destroy]
+  before_action only: [:show, :update, :firmware] do
+    require_session_or_token!(@product.id)
+  end
 
   def index
     @products = Product.all

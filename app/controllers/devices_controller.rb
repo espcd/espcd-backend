@@ -1,6 +1,13 @@
 class DevicesController < ApplicationController
   before_action :set_device, except: [:index, :create]
-  before_action :require_session_or_token!
+
+  before_action :require_session!, only: [:index, :destroy]
+  before_action only: [:create] do
+    require_session_or_token!(device_params[:product_id])
+  end
+  before_action only: [:show, :update] do
+    require_session_or_token!(@device.product.id)
+  end
 
   def index
     @devices = Device.all
