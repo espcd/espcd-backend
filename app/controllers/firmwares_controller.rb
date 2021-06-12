@@ -8,6 +8,9 @@ class FirmwaresController < ApplicationController
   before_action only: [:show, :update, :content] do
     require_session_or_token!(@firmware.product.id)
   end
+  before_action only: [:content] do
+    json_error('auto update disabled', :bad_request) unless @firmware.product.auto_update
+  end
 
   def index
     @firmwares = Firmware.all

@@ -5,6 +5,9 @@ class ProductsController < ApplicationController
   before_action only: [:show, :update, :firmware] do
     require_session_or_token!(@product.id)
   end
+  before_action only: [:firmware] do
+    json_error('auto update disabled', :bad_request) unless @product.auto_update
+  end
 
   def index
     @products = Product.all
