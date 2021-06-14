@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_12_142840) do
+ActiveRecord::Schema.define(version: 2021_06_14_142541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2021_06_12_142840) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "board_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "fqbn"
+    t.uuid "firmware_id"
+    t.uuid "product_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["firmware_id"], name: "index_board_types_on_firmware_id"
+    t.index ["product_id"], name: "index_board_types_on_product_id"
   end
 
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -104,6 +114,8 @@ ActiveRecord::Schema.define(version: 2021_06_12_142840) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "board_types", "firmwares"
+  add_foreign_key "board_types", "products"
   add_foreign_key "devices", "firmwares"
   add_foreign_key "devices", "products"
   add_foreign_key "firmwares", "products"
