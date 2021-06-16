@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, except: [:index, :create]
+  before_action :set_board_type, only: [:firmware, :set_firmware]
 
   before_action :require_session!, only: [:index, :create, :destroy]
   before_action only: [:show, :update, :firmware] do
@@ -34,9 +35,17 @@ class ProductsController < ApplicationController
   end
 
   def firmware
-    firmwares = @product.firmwares.select { |f| f.fqbn == params[:fqbn] }
-    firmware = firmwares.last
+    firmware = @board_type&.firmware
     json_response(firmware)
+  end
+
+  def set_firmware
+    if @board_type
+      @board_type.update!(firmware_id: params[:firmware_id])
+    else
+      @board_type = BoardType.create!(fqbn: params[:fqbn], product_id: params[:id], firmware_id: params[:firmware_id])
+    end
+    json_response(@board_type.firmware)
   end
 
   private
@@ -49,5 +58,9 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def set_board_type
+    @board_type = @product.board_types.select { |b| b.fqbn == params[:fqbn] }.last
   end
 end

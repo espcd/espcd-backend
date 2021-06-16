@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :products do
     member do
       get 'firmware/:fqbn', to: 'products#firmware'
+      patch 'firmware/:fqbn', to: 'products#set_firmware'
     end
   end
 
