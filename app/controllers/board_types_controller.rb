@@ -8,6 +8,10 @@ class BoardTypesController < ApplicationController
     json_response(@board_types)
   end
 
+  def versions
+    json_response(@board_type.versions)
+  end
+
   private
 
   def set_board_type

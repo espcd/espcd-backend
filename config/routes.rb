@@ -21,4 +21,10 @@ Rails.application.routes.draw do
 
   get 'user', to: 'users#show'
   patch 'user', to: 'users#update'
+
+  resources :board_types, only: [:index] do
+    member do
+      get 'versions', to: 'board_types#versions'
+    end
+  end
 end
