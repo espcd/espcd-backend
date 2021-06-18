@@ -4,10 +4,10 @@ class ProductsController < ApplicationController
 
   before_action :require_session!, only: [:index, :create, :destroy]
   before_action only: [:show, :update, :firmware] do
-    require_session_or_token!(@product.id)
+    require_session_or_product_token!(@product.id)
   end
   before_action only: [:firmware] do
-    json_error('auto update disabled', :bad_request) unless @product.auto_update
+    json_response(nil) unless @product.auto_update
   end
 
   def index
@@ -40,6 +40,10 @@ class ProductsController < ApplicationController
   end
 
   def set_firmware
+    if @product.lock_firmwares
+      return json_response(nil)
+    end
+
     if @board_type
       @board_type.update!(firmware_id: params[:firmware_id])
     else

@@ -3,13 +3,15 @@ class FirmwaresController < ApplicationController
 
   before_action :require_session!, only: [:index, :destroy]
   before_action only: [:create] do
-    require_session_or_token!(firmware_params[:product_id])
+    require_session_or_token!
   end
   before_action only: [:show, :update, :content] do
-    require_session_or_token!(@firmware.product&.id)
+    board_type = BoardType.find_by(firmware_id: params[:id])
+    require_session_or_product_token!(board_type&.product&.id)
   end
   before_action only: [:content] do
-    json_error('auto update disabled', :bad_request) unless @firmware.product&.auto_update
+    board_type = BoardType.find_by(firmware_id: params[:id])
+    json_error('auto update disabled', :bad_request) unless board_type&.product&.auto_update
   end
 
   def index
@@ -27,21 +29,7 @@ class FirmwaresController < ApplicationController
   end
 
   def update
-    product_id = firmware_params[:product_id]
-    product = nil
-    if product_id
-      product = Product.find(product_id)
-    end
-
-    if product&.lock_firmwares
-      @firmware.update!(firmware_params.reject { |k, _| k == 'product_id' })
-    else
-      @firmware.update!(firmware_params)
-      @firmware.product.firmwares.select { |f| f.fqbn == @firmware.fqbn && f.id != @firmware.id }.each do |firmware|
-        firmware.update!(product_id: nil)
-      end
-    end
-
+    @firmware.update!(firmware_params)
     json_response(@firmware)
   end
 
@@ -63,7 +51,7 @@ class FirmwaresController < ApplicationController
   def firmware_params
     params
       .require(:firmware)
-      .permit(:id, :version, :title, :description, :fqbn, :content, :product_id)
+      .permit(:id, :version, :title, :description, :fqbn, :content)
   end
 
   def set_firmware
