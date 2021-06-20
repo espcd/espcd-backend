@@ -24,7 +24,7 @@ class FirmwaresController < ApplicationController
   end
 
   def create
-    @firmware = Firmware.create!(firmware_params.reject { |k, _| k == 'product_id' })
+    @firmware = Firmware.create!
     json_response(@firmware, :created)
   end
 
