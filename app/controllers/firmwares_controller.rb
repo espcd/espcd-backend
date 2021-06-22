@@ -24,7 +24,7 @@ class FirmwaresController < ApplicationController
   end
 
   def create
-    @firmware = Firmware.create!
+    @firmware = Firmware.create!(firmware_params)
     json_response(@firmware, :created)
   end
 
@@ -49,9 +49,13 @@ class FirmwaresController < ApplicationController
   private
 
   def firmware_params
-    params
-      .require(:firmware)
-      .permit(:id, :version, :title, :description, :fqbn, :content)
+    if params[:firmware].present?
+      params
+        .require(:firmware)
+        .permit(:id, :version, :title, :description, :fqbn, :content)
+    else
+      ActionController::Parameters.new
+    end
   end
 
   def set_firmware

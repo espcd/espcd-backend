@@ -1,6 +1,5 @@
 class Product < ApplicationRecord
   has_many :devices, dependent: :nullify
-  has_many :firmwares, dependent: :nullify
   has_many :tokens, dependent: :nullify
   has_many :board_types, dependent: :destroy
 

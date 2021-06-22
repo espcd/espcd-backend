@@ -3,10 +3,10 @@ class DevicesController < ApplicationController
 
   before_action :require_session!, only: [:index, :destroy]
   before_action only: [:create] do
-    require_session_or_product_token!(device_params[:product_id])
+    require_session_or_product_token!(device_params[:product_id], allow_nil: true)
   end
   before_action only: [:show, :update] do
-    require_session_or_product_token!(@device.product&.id)
+    require_session_or_product_token!(@device.product&.id, allow_nil: true)
   end
 
   def index
@@ -38,9 +38,13 @@ class DevicesController < ApplicationController
   private
 
   def device_params
-    params
-      .require(:device)
-      .permit(:id, :title, :description, :fqbn, :firmware_id, :last_seen, :product_id)
+    if params[:device].present?
+      params
+        .require(:device)
+        .permit(:id, :title, :description, :fqbn, :firmware_id, :last_seen, :product_id)
+    else
+      ActionController::Parameters.new
+    end
   end
 
   def set_device

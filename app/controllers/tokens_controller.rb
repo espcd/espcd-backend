@@ -29,9 +29,13 @@ class TokensController < ApplicationController
   private
 
   def token_params
-    params
-      .require(:token)
-      .permit(:id, :title, :description, :token, :user_id, :expires_at, :product_id)
+    if params[:token].present?
+      params
+        .require(:token)
+        .permit(:id, :title, :description, :token, :user_id, :expires_at, :product_id)
+    else
+      ActionController::Parameters.new
+    end
   end
 
   def set_token
