@@ -104,18 +104,10 @@ class FirmwaresControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
 
     get "#{url}?api_key=#{get_session}"
-    assert_response :bad_request
-
-    product = Product.create!(auto_update: false)
-    BoardType.create!(fqbn: 'esp32:esp32:esp32', product_id: product.id, firmware_id: firmware.id)
-
-    get "#{url}?api_key=#{get_session}"
-    assert_response :bad_request
-
-    product.update!(auto_update: true)
-
-    get "#{url}?api_key=#{get_session}"
     assert_response :redirect
+
+    product = Product.create!(auto_update: true)
+    BoardType.create!(fqbn: 'esp32:esp32:esp32', product_id: product.id, firmware_id: firmware.id)
 
     get "#{url}?api_key=#{get_token}"
     assert_response :unauthorized

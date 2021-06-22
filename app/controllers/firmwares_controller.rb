@@ -11,7 +11,7 @@ class FirmwaresController < ApplicationController
   end
   before_action only: [:content] do
     board_type = BoardType.find_by(firmware_id: params[:id])
-    json_error('auto update disabled', :bad_request) unless board_type&.product&.auto_update
+    json_error('auto update disabled', :bad_request) unless session_user || board_type&.product&.auto_update
   end
 
   def index
