@@ -46,7 +46,7 @@ class FirmwaresControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    post url, params: { firmware: { fqbn: 'esp32:esp32:esp32', version: '1.0' } }
+    post url, params: params
     assert_response :unauthorized
 
     post "#{url}?api_key=#{get_session}", params: params
@@ -63,22 +63,23 @@ class FirmwaresControllerTest < ActionDispatch::IntegrationTest
   test 'update' do
     firmware = create_firmware
     url = firmware_url(firmware.id)
+    params = { firmware: { title: 'test' } }
 
-    patch url, params: { firmware: { title: 'test' } }
+    patch url, params: params
     assert_response :unauthorized
 
-    patch "#{url}?api_key=#{get_session}", params: { firmware: { title: 'test' } }
+    patch "#{url}?api_key=#{get_session}", params: params
     assert_response :success
 
-    patch "#{url}?api_key=#{get_token}", params: { firmware: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token}", params: params
     assert_response :unauthorized
 
     product = Product.create!
-    patch "#{url}?api_key=#{get_token(product.id)}", params: { firmware: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token(product.id)}", params: params
     assert_response :unauthorized
 
     BoardType.create!(fqbn: 'esp32:esp32:esp32', product_id: product.id, firmware_id: firmware.id)
-    patch "#{url}?api_key=#{get_token(product.id)}", params: { firmware: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token(product.id)}", params: params
     assert_response :success
   end
 

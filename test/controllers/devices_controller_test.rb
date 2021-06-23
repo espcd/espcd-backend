@@ -57,20 +57,21 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
   test 'update' do
     device = Device.create!(fqbn: 'esp32:esp32:esp32')
     url = device_url(device.id)
+    params = { device: { title: 'test' } }
 
-    patch url, params: { device: { title: 'test' } }
+    patch url, params: params
     assert_response :unauthorized
 
-    patch "#{url}?api_key=#{get_token}", params: { device: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token}", params: params
     assert_response :success
 
     product = Product.create!
     device.update!(product_id: product.id)
 
-    patch "#{url}?api_key=#{get_token}", params: { device: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token}", params: params
     assert_response :unauthorized
 
-    patch "#{url}?api_key=#{get_token(product.id)}", params: { device: { title: 'test' } }
+    patch "#{url}?api_key=#{get_token(product.id)}", params: params
     assert_response :success
   end
 
