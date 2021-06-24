@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: redirect('/devices')
+
   resources :devices
 
   resources :firmwares do
