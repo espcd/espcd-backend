@@ -1,5 +1,6 @@
 class Firmware < ApplicationRecord
   has_many :devices
+  has_one :board_type
 
   validates :fqbn, :version, :content, presence: true
 

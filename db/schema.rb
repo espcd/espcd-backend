@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_110549) do
+ActiveRecord::Schema.define(version: 2021_09_02_210525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -106,8 +106,6 @@ ActiveRecord::Schema.define(version: 2021_06_15_110549) do
     t.uuid "session"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "token_id"
-    t.index ["token_id"], name: "index_users_on_token_id"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -128,5 +126,4 @@ ActiveRecord::Schema.define(version: 2021_06_15_110549) do
   add_foreign_key "devices", "products"
   add_foreign_key "tokens", "products"
   add_foreign_key "tokens", "users"
-  add_foreign_key "users", "tokens"
 end
